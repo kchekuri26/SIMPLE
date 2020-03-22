@@ -8,9 +8,9 @@ public class BytecodeInterpreter {
     public static final int STORE = 2;
 
     private ArrayList<Integer> bytecode;
-    private int memory[];
-    private int accumulator;
-    private int memorySize = 0;
+    private static int memory[];
+    private static int accumulator=0;
+    private static int memorySize = 0;
 
     public BytecodeInterpreter(int size){
         bytecode = new ArrayList<Integer>();
@@ -23,7 +23,7 @@ public class BytecodeInterpreter {
     }
 
     private void load(int value){
-        accumulator = memory[value];
+        accumulator += memory[value];
     }
 
     private void loadi(int value){
@@ -31,20 +31,20 @@ public class BytecodeInterpreter {
     }
 
     private void store(int value){
-        memory[memorySize] = value;
-        memorySize++;
+        memory[value] = accumulator;
+        accumulator = 0;
     }
 
     public void run(){
         int i = 0;
         while (i<bytecode.size()){
-            if (bytecode.get(i) == 0){
+            if (bytecode.get(i) == LOAD){
                 load(bytecode.get(i+1));
             }
-            else if (bytecode.get(i) == 1){
+            else if (bytecode.get(i) == LOADI){
                 loadi(bytecode.get(i+1));
             }
-            else if (bytecode.get(i) == 2){
+            else if (bytecode.get(i) == STORE){
                 store(bytecode.get(i+1));
             }
             i+=2;
