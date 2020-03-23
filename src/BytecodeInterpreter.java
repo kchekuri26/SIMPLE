@@ -30,8 +30,9 @@ public class BytecodeInterpreter {
         accumulator+=value;
     }
 
-    private void store(int value){
-        memory[value] = accumulator;
+    private void store(){
+        memory[memorySize] = accumulator;
+        memorySize++;
         accumulator = 0;
     }
 
@@ -45,7 +46,7 @@ public class BytecodeInterpreter {
                 loadi(bytecode.get(i+1));
             }
             else if (bytecode.get(i) == STORE){
-                store(bytecode.get(i+1));
+                store();
             }
             i+=2;
         }

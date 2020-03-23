@@ -70,8 +70,7 @@ public class Parser {
             if (parseAssignOp()) {
 
                 if (parseExpression()) {
-                    bytecodeInterpreter.getBytecode().add(bytecodeInterpreter.STORE);
-                    bytecodeInterpreter.getBytecode().add(indexAllot);
+                    bytecodeInterpreter.generate(BytecodeInterpreter.STORE, indexAllot);
                     indexAllot++;
                     return true;
                 } else {
@@ -130,13 +129,11 @@ public class Parser {
                     printError("variable undefined");
                     return false;
                 } else {
-                    bytecodeInterpreter.getBytecode().add(bytecodeInterpreter.LOAD);
-                    bytecodeInterpreter.getBytecode().add(symTab.getAddress(t.getValue()));
+                    bytecodeInterpreter.generate(BytecodeInterpreter.LOAD, symTab.getAddress(t.getValue()));
                 }
             }
             if (t.getType() == Lexer.INTTOKEN) {
-                bytecodeInterpreter.getBytecode().add(bytecodeInterpreter.LOADI);
-                bytecodeInterpreter.getBytecode().add(Integer.valueOf(t.getValue()));
+                bytecodeInterpreter.generate(BytecodeInterpreter.LOADI, Integer.valueOf(t.getValue()));
             }
             while (true) {
                 t = nextToken();
@@ -147,12 +144,10 @@ public class Parser {
                         return false;
                     }
                     else if (t.getType() == Lexer.IDTOKEN){
-                        bytecodeInterpreter.getBytecode().add(bytecodeInterpreter.LOAD);
-                        bytecodeInterpreter.getBytecode().add(symTab.getAddress(t.getValue()));
+                        bytecodeInterpreter.generate(BytecodeInterpreter.LOAD, symTab.getAddress(t.getValue()));
                     }
                     else if (t.getType() == Lexer.INTTOKEN){
-                        bytecodeInterpreter.getBytecode().add(bytecodeInterpreter.LOADI);
-                        bytecodeInterpreter.getBytecode().add(Integer.valueOf(t.getValue()));
+                        bytecodeInterpreter.generate(BytecodeInterpreter.LOADI, Integer.valueOf(t.getValue()));
                     }
                 } else {
                     putTokenBack();
