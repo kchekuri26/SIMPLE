@@ -3,9 +3,11 @@ import java.util.List;
 
 public class BytecodeInterpreter {
 
-    public static final int LOAD = 0;
-    public static final int LOADI = 1;
-    public static final int STORE = 2;
+    public static final int ADD = 0;
+    public static final int MINUS = 1;
+    public static final int ADDI = 2;
+    public static final int MINUSI = 3;
+    public static final int STORE = 4;
 
     private ArrayList<Integer> bytecode;
     private static int memory[];
@@ -22,12 +24,20 @@ public class BytecodeInterpreter {
         bytecode.add(operand);
     }
 
-    private void load(int value){
+    private void add(int value){
         accumulator += memory[value];
     }
 
-    private void loadi(int value){
-        accumulator+=value;
+    private void minus(int value){
+        accumulator = accumulator - memory[value];
+    }
+
+    private void addi(int value){
+        accumulator += value;
+    }
+
+    private void minusi(int value){
+        accumulator = accumulator - value;
     }
 
     private void store(){
@@ -39,11 +49,17 @@ public class BytecodeInterpreter {
     public void run(){
         int i = 0;
         while (i<bytecode.size()){
-            if (bytecode.get(i) == LOAD){
-                load(bytecode.get(i+1));
+            if (bytecode.get(i) == ADD){
+                add(bytecode.get(i+1));
             }
-            else if (bytecode.get(i) == LOADI){
-                loadi(bytecode.get(i+1));
+            else if (bytecode.get(i) == MINUS){
+                minus(bytecode.get(i+1));
+            }
+            else if (bytecode.get(i) == ADDI){
+                addi(bytecode.get(i+1));
+            }
+            else if (bytecode.get(i) == MINUSI){
+                minusi(bytecode.get(i+1));
             }
             else if (bytecode.get(i) == STORE){
                 store();

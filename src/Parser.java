@@ -129,25 +129,33 @@ public class Parser {
                     printError("variable undefined");
                     return false;
                 } else {
-                    bytecodeInterpreter.generate(BytecodeInterpreter.LOAD, symTab.getAddress(t.getValue()));
+                    bytecodeInterpreter.generate(BytecodeInterpreter.ADD, symTab.getAddress(t.getValue()));
                 }
             }
             if (t.getType() == Lexer.INTTOKEN) {
-                bytecodeInterpreter.generate(BytecodeInterpreter.LOADI, Integer.valueOf(t.getValue()));
+                bytecodeInterpreter.generate(BytecodeInterpreter.ADDI, Integer.valueOf(t.getValue()));
             }
             while (true) {
                 t = nextToken();
-                if (t.getType() == Lexer.PLUSTOKEN) {
+                if (t.getType() == Lexer.PLUSTOKEN || t.getType() == Lexer.MINUSTOKEN) {
                     t = nextToken();
                     if (!((t.getType() == Lexer.INTTOKEN) || (t.getType() == Lexer.IDTOKEN))) {
                         printError("expecting id or int");
                         return false;
                     }
                     else if (t.getType() == Lexer.IDTOKEN){
-                        bytecodeInterpreter.generate(BytecodeInterpreter.LOAD, symTab.getAddress(t.getValue()));
+                        if (tokens.get(index-2).getType()==Lexer.PLUSTOKEN){
+                            bytecodeInterpreter.generate(BytecodeInterpreter.ADD, symTab.getAddress(t.getValue()));
+                        } else {
+                            bytecodeInterpreter.generate(BytecodeInterpreter.MINUS, symTab.getAddress(t.getValue()));
+                        }
                     }
                     else if (t.getType() == Lexer.INTTOKEN){
-                        bytecodeInterpreter.generate(BytecodeInterpreter.LOADI, Integer.valueOf(t.getValue()));
+                        if (tokens.get(index-2).getType()==Lexer.PLUSTOKEN){
+                            bytecodeInterpreter.generate(BytecodeInterpreter.ADDI, Integer.valueOf(t.getValue()));
+                        } else {
+                            bytecodeInterpreter.generate(BytecodeInterpreter.MINUSI, Integer.valueOf(t.getValue()));
+                        }
                     }
                 } else {
                     putTokenBack();
@@ -175,7 +183,7 @@ public class Parser {
     }
 
     public static void main(String[] args) {
-        Parser parser = new Parser("test.txt");
+        Parser parser = new Parser("testMinus.txt");
         if (parser.parseProgram()) {
             System.out.println("Valid Program");
             System.out.println(parser.symTab);

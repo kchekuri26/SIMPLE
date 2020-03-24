@@ -23,6 +23,7 @@ public class Lexer {
     public static final String IDTOKEN="ID";
     public static final String ASSMTTOKEN="ASSMT";
     public static final String PLUSTOKEN="PLUS";
+    public static final String MINUSTOKEN="MINUS";
     public static final String EOFTOKEN="EOF";
     public static final String UNKOWTOKEN="UNKNOW";
 
@@ -82,6 +83,10 @@ public class Lexer {
                 index++;
                 t = new Token(PLUSTOKEN, "+", lineNum);
                 return t;
+            } else if (ch=='-') {
+                index++;
+                t = new Token(MINUSTOKEN, "-", lineNum);
+                return t;
             } else if ((ch <= 'z' && ch >= 'a') || (ch <= 'Z' && ch >= 'A')) { // is an id
                 t = getIdentifier();
                 return t;
@@ -94,7 +99,7 @@ public class Lexer {
                 t = new Token(UNKOWTOKEN,Character.toString(ch),lineNum);
             }
         } else {
-            t = new Token("EOF", "-", lineNum);
+            t = new Token("EOF", "$", lineNum);
 
         }
         return t;
@@ -171,7 +176,7 @@ public class Lexer {
 
 
     public static void main(String[] args) {
-        String fileName="idNums.txt";
+        String fileName="testMinus.txt";
 //        if (args.length==0) {
 //            System.out.println("You must specify a file name");
 //        } else {
