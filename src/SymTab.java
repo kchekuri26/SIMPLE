@@ -21,6 +21,10 @@ public class SymTab {
         }
     }
 
+    /**
+     *
+     * @return the hashmap
+     */
     public HashMap<String, Integer> getMap() {
         return map;
     }
