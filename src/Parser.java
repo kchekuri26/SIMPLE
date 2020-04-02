@@ -187,10 +187,13 @@ public class Parser {
     }
 
     public static void main(String[] args) {
-        Parser parser = new Parser("test.txt");
+        Parser parser = new Parser("testOutOfBounds.txt");
         if (parser.parseProgram()) {
             System.out.println("Valid Program");
             System.out.println(parser.symTab);
+            if (parser.symTab.getMap().size()>bytecodeInterpreter.getMemory().length){
+                System.out.println("Error: Address out of range");
+            }
             ArrayList<Integer> byteCode = bytecodeInterpreter.getBytecode();
             System.out.println("ByteCode: " + byteCode);
             bytecodeInterpreter.run();

@@ -21,6 +21,10 @@ public class SymTab {
         }
     }
 
+    public HashMap<String, Integer> getMap() {
+        return map;
+    }
+
     /**
      * add adds a new id to map if its not already in. It sets the address
      * of the id to map.size, i.e., the next available address 0, 1,...

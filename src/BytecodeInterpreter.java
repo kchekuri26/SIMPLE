@@ -68,9 +68,11 @@ public class BytecodeInterpreter {
      * this method stores the value in the accumulator in the memory.
      */
     private void store(){
-        memory[memorySize] = accumulator;
-        memorySize++;
-        accumulator = 0;
+        if (memorySize<memory.length){
+            memory[memorySize] = accumulator;
+            memorySize++;
+            accumulator = 0;
+        }
     }
 
     /**
