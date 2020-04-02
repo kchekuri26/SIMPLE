@@ -17,8 +17,9 @@ import java.util.Scanner;
 public class Lexer {
 
     String buffer;
-    int index = 0;
-    int lineNum=1;
+    private int index = 0;
+    private int lineNum=1;
+
     public static final String INTTOKEN="INT";
     public static final String IDTOKEN="ID";
     public static final String ASSMTTOKEN="ASSMT";
@@ -173,7 +174,16 @@ public class Lexer {
         return tokens;
     }
 
-
+    /**
+     * Prints the buffer in the lexer.
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "Lexer{" +
+                "buffer='" + buffer + '\'' +
+                '}';
+    }
 
     public static void main(String[] args) {
         String fileName="testMinus.txt";

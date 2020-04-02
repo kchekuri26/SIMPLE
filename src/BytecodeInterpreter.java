@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class generates bytecode and interprets the bytecode programs and updates the memory.
+ */
 public class BytecodeInterpreter {
 
     public static final int ADD = 0;
@@ -19,33 +22,60 @@ public class BytecodeInterpreter {
         memory = new int[size];
     }
 
+    /**
+     * this method takes in a command and an operand as parameters and adds the command to the bytecode being generated.
+     * @param operator
+     * @param operand
+     */
     public void generate(int operator, int operand){
         bytecode.add(operator);
         bytecode.add(operand);
     }
 
+    /**
+     * this method gets a value from the memory and adds it to the value in the accumulator.
+     * @param value
+     */
     private void add(int value){
         accumulator += memory[value];
     }
 
+    /**
+     * this method gets a value from the memory and subtracts it from the value in the accumulator.
+     * @param value
+     */
     private void minus(int value){
         accumulator = accumulator - memory[value];
     }
 
+    /**
+     * this method adds the inputted value to the value in the accumulator.
+     * @param value
+     */
     private void addi(int value){
         accumulator += value;
     }
 
+    /**
+     * this method subtracts the inputted value from the value in the accumulator.
+     * @param value
+     */
     private void minusi(int value){
         accumulator = accumulator - value;
     }
 
+    /**
+     * this method stores the value in the accumulator in the memory.
+     */
     private void store(){
         memory[memorySize] = accumulator;
         memorySize++;
         accumulator = 0;
     }
 
+    /**
+     * this method runs the code in bytecode and modifies the memory.
+     */
     public void run(){
         int i = 0;
         while (i<bytecode.size()){
@@ -68,17 +98,26 @@ public class BytecodeInterpreter {
         }
     }
 
+    /**
+     * this method returns the bytecode.
+     * @return bytecode
+     */
     public ArrayList<Integer> getBytecode() {
         return bytecode;
     }
 
+    /**
+     * this method returns the memory.
+     * @return memory
+     */
     public int[] getMemory() {
         return memory;
     }
 
-    public static void main(String[] args) {
-
+    @Override
+    public String toString() {
+        return "BytecodeInterpreter{" +
+                "bytecode=" + bytecode + "memory" + memory +
+                '}';
     }
-
-
 }

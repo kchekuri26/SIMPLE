@@ -6,7 +6,7 @@ import java.util.HashMap;
  * It just wraps a HashMap to do its work.
  */
 public class SymTab {
-    HashMap<String,Integer> map = new HashMap<String,Integer>();
+    private HashMap<String,Integer> map = new HashMap<String,Integer>();
 
     /**
      *
@@ -32,6 +32,10 @@ public class SymTab {
         }
     }
 
+    /**
+     * Prints the hashmap
+     * @return
+     */
     @Override
     public String toString() {
         return "SymTab:"+map;

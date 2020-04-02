@@ -8,11 +8,11 @@ import java.util.Arrays;
  */
 public class Parser {
 
-    ArrayList<Token> tokens;
-    SymTab symTab = new SymTab();
+    private ArrayList<Token> tokens;
+    private SymTab symTab = new SymTab();
     private static BytecodeInterpreter bytecodeInterpreter = new BytecodeInterpreter(10);
     private int indexAllot = 0;
-    int index;
+    private int index;
 
     public Parser(String fileName) {
         Lexer lexer = new Lexer(fileName);
@@ -178,12 +178,16 @@ public class Parser {
         System.out.println("Error: " + error + " at line " + curToken.getLineNum());
     }
 
+    /**
+     * prints all the token and symbolTable.
+     */
+    @Override
     public String toString() {
         return this.tokens.toString() + "\n" + this.symTab.toString();
     }
 
     public static void main(String[] args) {
-        Parser parser = new Parser("testMinus.txt");
+        Parser parser = new Parser("test.txt");
         if (parser.parseProgram()) {
             System.out.println("Valid Program");
             System.out.println(parser.symTab);
